@@ -14,7 +14,7 @@ function formatDate(currentDate) {
     "Sep",
     "Oct",
     "Nov",
-    "Dec"
+    "Dec",
   ];
   let month = months[now.getMonth()];
 
@@ -40,12 +40,13 @@ NewDateTime.innerHTML = `${newDate} ${hour}:${minute}`;
 
 // ---------------current location weather------------------
 function displayCurrentWeather(response) {
+  //   document.querySelector("#city-title").innerHTML = response.data.name;
+
   console.log(response);
   let temperatureC = Math.round(response.data.main.temp);
   let showTemp = document.querySelector("#current-temp");
   showTemp.innerHTML = `${temperatureC}`;
 
-  // let description = response.data.weather[0].description;
   let description = response.data.weather[0].main;
   let showDes = document.querySelector("#description");
   showDes.innerHTML = `${description}`;
@@ -82,32 +83,42 @@ function showPosition(position) {
   let long = position.coords.longitude;
   let key = "cff65853d7c461490797b173c0cc1233";
   let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${key}&units=metric`;
-
+  let searchInput = document.querySelector("#search-input");
+  searchInput.value = "";
   axios.get(url).then(displayCurrentWeather);
 }
 
-function getCurrentPosition() {
+function getCurrentPosition(event) {
+  event.preventDefault();
   navigator.geolocation.getCurrentPosition(showPosition);
 }
 
-let button = document.querySelector("#currentLocation");
-button.addEventListener("click", getCurrentPosition);
-
 // -----------------
+function searchCity(city) {
+  let key = "cff65853d7c461490797b173c0cc1233";
+  let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
+  axios.get(url).then(displayCurrentWeather);
+}
 
 function cityTitle(event) {
   event.preventDefault();
-  let city = document.querySelector("#search-input");
-  let newCityTitle = document.querySelector("#city-title");
-  if (city.value) {
-    newCityTitle.innerHTML = `${city.value}`;
-  } else {
-    newCityTitle.innerHTML = "San Diego";
-  }
-
-  let key2 = "5f472b7acba333cd8a035ea85a0d4d4c";
-  let url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&appid=${key2}&units=metric`;
-  axios.get(url).then(displayCurrentWeather);
+  let newCity = document.querySelector("#search-input").value;
+  // let newCityTitle = document.querySelector("#city-title");
+  //   if (city.value) {
+  //     newCityTitle.innerHTML = `${city.value}`;
+  //   } else {
+  //     newCityTitle.innerHTML = "San Diego";
+  //   }
+  //   searchCity(`${city.value}`);
+  // searchCity(newcity);
+  // let newCity = "Paris";
+  searchCity(newCity);
 }
+
+searchCity("San Diego");
+
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", cityTitle);
+
+let currentButton = document.querySelector("#currentLocation");
+currentButton.addEventListener("click", getCurrentPosition);
