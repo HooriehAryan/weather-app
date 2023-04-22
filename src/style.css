@@ -54,9 +54,10 @@ input[type="submit"] {
   font-size: 14px;
   font-weight: bold;
   position: relative;
-  top: -95px;
+  top: -140px;
   left: 295px;
   text-align: center;
+  margin-left: 2px;
 }
 
 .tempreture {
@@ -65,7 +66,7 @@ input[type="submit"] {
   font-weight: bold;
   position: relative;
   line-height: 0.8px;
-  top: -85px;
+  top: -130px;
   left: 300px;
 }
 #celsius-link {
@@ -132,12 +133,11 @@ input[type="submit"] {
   margin: 30px auto;
 }
 
-#main-sun-icon {
-  text-align: center;
+#main-icon {
   position: relative;
-  left: 310px;
-  top: -85px;
-  font-size: 26px;
+  left: 280px;
+  top: -110px;
+  width: 80px;
 }
 .sun-icon {
   color: orange;
