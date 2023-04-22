@@ -1,4 +1,4 @@
-// -----------------------dispaly date-------------------
+// -----------------------dispaly date & time-------------------
 let now = new Date();
 
 function formatDate(currentDate) {
@@ -38,47 +38,37 @@ if (hour.toString().length === 1) {
 let NewDateTime = document.querySelector("#date-time");
 NewDateTime.innerHTML = `${newDate} ${hour}:${minute}`;
 
-// ---------------current location weather------------------
+// ---------------display current location weather------------------
 function displayCurrentWeather(response) {
-  //   document.querySelector("#city-title").innerHTML = response.data.name;
+  //----short form coding
+  document.querySelector("#city-title").innerHTML = response.data.name;
 
-  console.log(response);
-  let temperatureC = Math.round(response.data.main.temp);
-  let showTemp = document.querySelector("#current-temp");
-  showTemp.innerHTML = `${temperatureC}`;
+  document.querySelector("#current-temp").innerHTML = Math.round(
+    response.data.main.temp
+  );
+  document.querySelector("#description").innerHTML =
+    response.data.weather[0].main;
 
-  let description = response.data.weather[0].main;
-  let showDes = document.querySelector("#description");
-  showDes.innerHTML = `${description}`;
+  document.querySelector("#humidity").innerHTML = response.data.main.humidity;
 
-  let humidity = response.data.main.humidity;
-  let showHumidity = document.querySelector("#humidity");
-  showHumidity.innerHTML = `${humidity}`;
+  document.querySelector("#windSpeed").innerHTML = Math.round(
+    response.data.wind.speed
+  );
+  document.querySelector("#feelsLike").innerHTML = Math.round(
+    response.data.main.feels_like
+  );
+  document.querySelector("#maxTemp").innerHTML = Math.round(
+    response.data.main.temp_max
+  );
+  document.querySelector("#minTemp").innerHTML = Math.round(
+    response.data.main.temp_min
+  );
 
-  let windSpeed = Math.round(response.data.wind.speed);
-  let showWind = document.querySelector("#windSpeed");
-  showWind.innerHTML = `${windSpeed}`;
-
-  let feelsLike = Math.round(response.data.main.feels_like);
-  let showFeels = document.querySelector("#feelsLike");
-  showFeels.innerHTML = `${feelsLike}`;
-
-  let tempMax = Math.round(response.data.main.temp_max);
-  let showTempMax = document.querySelector("#maxTemp");
-  showTempMax.innerHTML = `${tempMax}`;
-
-  let tempMin = Math.round(response.data.main.temp_min);
-  let showTempMin = document.querySelector("#minTemp");
-  showTempMin.innerHTML = `${tempMin}`;
-
-  let cityTitle = document.querySelector("#city-title");
-  cityTitle.innerHTML = `${response.data.name}`;
+  document.querySelector("#search-input").value = "";
 }
 
+//----search current location with lat and long-------
 function showPosition(position) {
-  console.log(position);
-  console.log(position.coords.latitude);
-  console.log(position.coords.longitude);
   let lat = position.coords.latitude;
   let long = position.coords.longitude;
   let key = "cff65853d7c461490797b173c0cc1233";
@@ -93,7 +83,7 @@ function getCurrentPosition(event) {
   navigator.geolocation.getCurrentPosition(showPosition);
 }
 
-// -----------------
+// -----search city with it's name-------
 function searchCity(city) {
   let key = "cff65853d7c461490797b173c0cc1233";
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
@@ -102,23 +92,23 @@ function searchCity(city) {
 
 function cityTitle(event) {
   event.preventDefault();
+
   let newCity = document.querySelector("#search-input").value;
-  // let newCityTitle = document.querySelector("#city-title");
-  //   if (city.value) {
-  //     newCityTitle.innerHTML = `${city.value}`;
-  //   } else {
-  //     newCityTitle.innerHTML = "San Diego";
-  //   }
-  //   searchCity(`${city.value}`);
-  // searchCity(newcity);
-  // let newCity = "Paris";
-  searchCity(newCity);
+
+  if (newCity.length === 0) {
+    alert("Enter a city name");
+  } else {
+    searchCity(newCity);
+  }
 }
 
+//-----show default city values-------
 searchCity("San Diego");
 
+//-----click search button----
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", cityTitle);
 
+//-----click currentLocation button----
 let currentButton = document.querySelector("#currentLocation");
 currentButton.addEventListener("click", getCurrentPosition);

@@ -13,6 +13,9 @@ input[type="search"] {
   border: 1px solid lightgray;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
+input[type="submit"] {
+  box-shadow: none !important;
+}
 .searchButton {
   border-style: none;
   background-color: white;
@@ -99,7 +102,7 @@ input[type="search"] {
   margin: 6px 6px;
   width: 120px;
   position: fixed;
-  top: 66px;
+  top: 58px;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
 }
@@ -126,19 +129,9 @@ input[type="search"] {
   height: 340px;
   border: 2px solid lightgray;
   border-radius: 6px;
-  border-radius: 6px;
-
-  left: 2px;
-  top: 10px;
   margin: 30px auto;
-  position: relative;
 }
-.setting {
-  border-style: none;
-  background-color: white;
-  padding: 0;
-  margin: 0;
-}
+
 #main-sun-icon {
   text-align: center;
   position: relative;
